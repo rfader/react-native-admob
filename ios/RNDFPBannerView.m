@@ -64,7 +64,10 @@
     [adSizes enumerateObjectsUsingBlock:^(id jsonValue, NSUInteger idx, __unused BOOL *stop) {
         GADAdSize adSize = [RCTConvert GADAdSize:jsonValue];
         if (GADAdSizeEqualToSize(adSize, kGADAdSizeInvalid)) {
-            RCTLogWarn(@"Invalid adSize %@", jsonValue);
+            NSArray *split = [jsonValue componentsSeparatedByString:@"x"];
+            CGSize newSize = CGSizeMake([[split objectAtIndex:0] floatValue],
+                                        [[split objectAtIndex:1] floatValue]);
+            [validAdSizes addObject:NSValueFromGADAdSize(GADAdSizeFromCGSize(newSize))];
         } else {
             [validAdSizes addObject:NSValueFromGADAdSize(adSize)];
         }

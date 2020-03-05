@@ -259,7 +259,12 @@ public class RNPublisherBannerViewManager extends ViewGroupManager<ReactPublishe
 
         for (int i = 0; i < adSizeStringsArray.length; i++) {
                 String adSizeString = adSizeStringsArray[i];
-                adSizes[i] = getAdSizeFromString(adSizeString);
+                String[] splitSize = adSizeString.split("x");
+                if (splitSize.length == 2) {
+                  adSizes[i] = new AdSize(Integer.parseInt(splitSize[0]), Integer.parseInt(splitSize[1]));
+                } else {
+                  adSizes[i] = getAdSizeFromString(adSizeString);
+                }
         }
         view.setValidAdSizes(adSizes);
     }
